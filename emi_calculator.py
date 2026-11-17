@@ -8,4 +8,3 @@ number_of_payments= loan_tenure_years * 12
 
 emi= (principal_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** number_of_payments) / ((1 + monthly_interest_rate) ** number_of_payments - 1)
 print(f"The Equated Monthly Installment (EMI) is: {emi:.2f}")
-10
