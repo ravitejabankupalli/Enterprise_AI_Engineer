@@ -1,12 +1,72 @@
+##This is to practice the CSV oepning and closing
 
 
-# transactions are as follows below:
-# date,description,amount,type
-# 2026-09-03,Salary,85000,credit
-# 2026-09-05,Rent,-22000,debit
-# 2026-10-11,Swiggy,-640,debit
+# name=input("Please Enter Your Name: ")
 
-# Create a CSV file named "transactions.csv" with the content mentioned above, and then run the following Python code to generate a summary of transactions in a JSON file named "summary.json".:
+# lists=[]
+# with open("practice.txt","r") as file:
+# 	for line in sorted(file):
+# 		print(f"Hello, ",line.rstrip())
+
+# names_dict={"firstName":[], "lastName":[]}
+# with open("names.csv") as file:
+# 	for line in file:
+# 		firstName, lastName = line.rstrip().split(", ")
+# 		names_dict["firstName"].append(firstName)
+# 		names_dict["lastName"].append(lastName)
+
+# print(names_dict["firstName"])
+# print(names_dict["lastName"])
+
+
+# names=[]
+# with open("names.csv") as file:
+# 	for line in file:
+# 		firstName, address = line.rstrip().split(", ")
+# 		dict={}
+# 		dict["firstName"]=firstName
+# 		dict["address"]=address
+# 		names.append(dict)
+
+# for n in sorted(names, key=lambda name: name["firstName"]):
+# 	print(f'{n["firstName"]} is from{n["address"]}')
+
+
+# import csv
+
+
+# names=[]
+# with open("names.csv") as file:
+# 	reader=csv.DictReader(file)
+# 	for row in reader:
+# 		 names.append({"name":row['name'] , "home":row['home']})
+
+# for n in sorted(names, key=lambda name: name["name"]):
+# 	print(f'{n["name"]} is from {n["home"]}')
+
+
+
+
+# import csv
+# name=input("what is your Name? : ")
+# home=input("where is your Home? : ")
+
+# with open("names.csv","a") as file:
+# 	writer=csv.writer(file)
+# 	writer.writerow([name,home])
+
+
+
+# import csv
+# name=input("what is your Name? : ")
+# home=input("where is your Home? : ")
+
+# with open("names.csv","a") as file:
+# 	writer=csv.DictWriter(file, fieldnames=["name","home"])
+# 	writer.writerow({"name":name, "home":home})
+
+
+
 
 import csv
 import json
@@ -52,10 +112,71 @@ for month in summary:
 
 
 
-#writing to json
-with open("summary.json","w") as f:
-	json.dump(summary, f, indent=1)
+# #writing to json
+# with open("summary.json","w") as f:
+# 	json.dump(summary, f, indent=1)
 
-print("Wrote summary.json")
+# print("Wrote summary.json")
+
+
+print(summary)
+###printitng Ministatement
+
+
+
+print("===== Mini Statement =====")
+total_amount=0
+for month in summary:
+	total_amount +=summary[month]["net"]
+print(f"Balance: {total_amount}")
+
+
+debits = []
+for t in transactions:
+    if t["type"] == "debit":
+        debits.append(t)
+top_spends = sorted(debits, key=lambda t: t["amount"])[:5]
+
+print("Top 5 Spends")
+for t in top_spends:
+	print(f"{t["date"]}  {t["description"]}   {t["amount"]}")
+
+
+print("=== Monthly Summaries ===\n")
+print("Credits   Debits   Net Amount ")
+for month in sorted(summary):
+    m = summary[month]
+    print(f"{m['credits']}   {m['debits']}     {m['net']}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
