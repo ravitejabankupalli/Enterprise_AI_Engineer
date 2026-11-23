@@ -1,0 +1,4 @@
+date,description,amount,type
+2026-09-03,Salary,85000,credit
+2026-09-05,Rent,-22000,debit
+2026-10-11,Swiggy,-640,debit

@@ -68,78 +68,166 @@
 
 
 
-import csv
-import json
+# import csv
+# import json
 
+
+# transactions=[]
+# with open("transactions.csv") as file:
+# 	reader=csv.DictReader(file)
+# 	for row in reader:
+# 		try:
+# 			amount=float(row["amount"])
+# 		except ValueError:
+# 			print("skipping Bad Rows")
+# 			continue
+# 		transactions.append({
+# 			"date":row["date"],
+# 			"description":row["description"],
+# 			"amount": amount,
+# 			"type":row["type"]
+# 			})
+
+
+# # Summary
+# summary={}
+# for t in transactions:
+# 	month=t["date"][:7]
+
+# 	if month not in summary:
+
+# 		summary[month]={"credits": 0, "debits": 0, "net":0 }
+
+# 	if t["type"] == "credit":
+
+# 		summary[month]["credits"] += t["amount"]
+
+# 	elif t["type"] == "debit":
+
+# 		 summary[month]["debits"] += abs(t["amount"])
+
+# #Net 
+# for month in summary:
+# 	summary[month]["net"]=summary[month]["credits"]-summary[month]["debits"]
+
+
+
+# # #writing to json
+# # with open("summary.json","w") as f:
+# # 	json.dump(summary, f, indent=1)
+
+# # print("Wrote summary.json")
+
+
+# print(summary)
+# ###printitng Ministatement
+
+
+
+# print("===== Mini Statement =====")
+# total_amount=0
+# for month in summary:
+# 	total_amount +=summary[month]["net"]
+# print(f"Balance: {total_amount}")
+
+
+# debits = []
+# for t in transactions:
+#     if t["type"] == "debit":
+#         debits.append(t)
+# top_spends = sorted(debits, key=lambda t: t["amount"])[:5]
+
+# print("Top 5 Spends")
+# for t in top_spends:
+# 	print(f"{t["date"]}  {t["description"]}   {t["amount"]}")
+
+
+# print("=== Monthly Summaries ===\n")
+# print("Credits   Debits   Net Amount ")
+# for month in sorted(summary):
+#     m = summary[month]
+#     print(f"{m['credits']}   {m['debits']}     {m['net']}")
+
+
+
+
+
+
+
+
+
+print("This is the practice for mini statement that i have done before\n")
+
+import csv
+import json as j
 
 transactions=[]
 with open("transactions.csv") as file:
-	reader=csv.DictReader(file)
+	reader = csv.DictReader(file)
 	for row in reader:
 		try:
 			amount=float(row["amount"])
+
 		except ValueError:
-			print("skipping Bad Rows")
+
+			print("skipping bad rows")
 			continue
 		transactions.append({
-			"date":row["date"],
-			"description":row["description"],
+			"month": row["date"],
+			"description": row["description"],
 			"amount": amount,
 			"type":row["type"]
 			})
+print(transactions)
 
+print("\n\n\n")
 
-# Summary
 summary={}
-for t in transactions:
-	month=t["date"][:7]
 
+for i in transactions:
+
+	month=i["month"][:7]
 	if month not in summary:
 
-		summary[month]={"credits": 0, "debits": 0, "net":0 }
+		summary[month]={"credits":0, "debits":0, "net":0}
 
-	if t["type"] == "credit":
+	if i["type"]=="credit":
 
-		summary[month]["credits"] += t["amount"]
+		summary[month]["credits"] += i["amount"]
 
-	elif t["type"] == "debit":
+	elif i["type"]=="debit":
 
-		 summary[month]["debits"] += abs(t["amount"])
+		 summary[month]["debits"] += abs(i["amount"])
 
-#Net 
 for month in summary:
-	summary[month]["net"]=summary[month]["credits"]-summary[month]["debits"]
-
-
-
-# #writing to json
-# with open("summary.json","w") as f:
-# 	json.dump(summary, f, indent=1)
-
-# print("Wrote summary.json")
-
+	summary[month]["net"]= summary[month]["credits"]-summary[month]["debits"]
 
 print(summary)
-###printitng Ministatement
 
 
 
-print("===== Mini Statement =====")
+print("\n\n====== Mini Statement =====")
+
 total_amount=0
 for month in summary:
-	total_amount +=summary[month]["net"]
+	total_amount+=summary[month]['net']
+
 print(f"Balance: {total_amount}")
 
-
-debits = []
+debits=[]
 for t in transactions:
-    if t["type"] == "debit":
-        debits.append(t)
-top_spends = sorted(debits, key=lambda t: t["amount"])[:5]
+	if t["type"]=="debit":
+		debits.append(t)
 
-print("Top 5 Spends")
+# print(f"debits are {debits}")
+
+top_spends=sorted(debits, key= lambda t:t["amount"])[:5]
+
+
+print("Top 5 Spends: ")
+
 for t in top_spends:
-	print(f"{t["date"]}  {t["description"]}   {t["amount"]}")
+	print(f"{t["month"]}  {t["description"]}  {t["amount"]}")
 
 
 print("=== Monthly Summaries ===\n")
@@ -150,11 +238,8 @@ for month in sorted(summary):
 
 
 
-
-
-
-
-
+with open("summary_json.json","w") as file:
+	j.dump(summary, file, indent=2)
 
 
 
